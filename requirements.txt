@@ -5,3 +5,5 @@ gensim
 wordcloud
 matplotlib
 numpy
+streamlit
+PyPDF2
