@@ -2,3 +2,6 @@ nltk
 spacy
 scikit-learn
 gensim
+wordcloud
+matplotlib
+numpy
