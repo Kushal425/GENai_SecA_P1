@@ -1,61 +1,61 @@
-# ResearchScope – Intelligent Topic Analyzer
+# ResearchScope – Intelligent Topic Analyzer (Milestone 1)
 
-A Streamlit web app that analyzes research text using **NLP techniques** — keyword extraction, LDA topic modeling, text summarization, and visualizations.
+A traditional NLP-based Streamlit web application that analyzes research text using Keyword Extraction, Topic Modeling (LDA), and Extractive Summarization.
 
-## Features
-- 🔍 **TF-IDF Keyword Extraction**
-- 📚 **LDA Topic Modeling** with coherence scoring
-- 📝 **Automatic Text Summarization**
-- ☁️ **Word Cloud & Keyword Bar Chart Visualizations**
+---
 
-## Setup
+## � Installation & Local Hosting
 
-### 1. Clone the repository
+Follow these steps to set up the project locally on your machine.
+
+### Prerequisites
+Make sure you have **Python 3.10+** and **Git** installed on your system.
+
+### Step 1. Clone the repository
+Open your terminal or command prompt and run:
 ```bash
-git clone <your-repo-url>
-cd GEN_AI
+git clone https://github.com/Kushal425/GENai_SecA_P1.git
+cd GENai_SecA_P1
 ```
 
-### 2. Run the setup script (recommended)
-```bash
-bash setup.sh
-```
+### Step 2. Create and activate a Virtual Environment
+It is highly recommended to use a virtual environment to manage dependencies.
 
-### 2. Or set up manually
+**For macOS / Linux:**
 ```bash
 python3 -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+source venv/bin/activate
+```
+
+**For Windows:**
+```cmd
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Step 3. Install Python Dependencies
+Once the virtual environment is activated, install the required packages:
+```bash
 pip install -r requirements.txt
+```
 
-# Required: download spaCy language model
+### Step 4. Download Required Language Models
+The application relies on spaCy and NLTK models. Download them by running:
+```bash
 python -m spacy download en_core_web_sm
-
-# Required: download NLTK corpora
 python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); nltk.download('punkt_tab')"
 ```
 
-### 3. Run the app
+### Step 5. Run the Application Locally
+Start the Streamlit development server:
 ```bash
-source venv/bin/activate
 streamlit run app.py
 ```
 
-## Project Structure
-```
-GEN_AI/
-├── app.py                  # Main Streamlit application
-├── requirements.txt        # Python dependencies
-├── setup.sh                # One-command environment setup
-├── data/                   # Input data directory
-└── src/
-    ├── preprocessing.py    # Text cleaning, tokenization, lemmatization
-    ├── feature_extraction.py  # TF-IDF vectorization
-    ├── topic_model.py      # LDA topic modeling
-    ├── evaluation.py       # Coherence score evaluation
-    ├── keyword_extractor.py   # Keyword extraction
-    ├── summarizer.py       # Text summarization
-    └── visualizations.py  # Word cloud & charts
-```
+### Step 6. Access the App
+If your browser doesn't open automatically, navigate to the following URL in your web browser:
+**➡️ http://localhost:8501**
 
-## Dependencies
-See `requirements.txt`. Key libraries: `streamlit`, `spacy`, `nltk`, `scikit-learn`, `gensim`, `wordcloud`, `matplotlib`.
+---
+
+*Note: To stop the local server at any time, press `Ctrl + C` in your terminal.*
