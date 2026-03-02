@@ -161,29 +161,41 @@ The app will open automatically at *http://localhost:8501*
 
 ## Project Structure
 
-
 ResearchScope/
-
 │
-
 ├── data/   # Input documents and datasets
 ├── src/
 
 │   ├── preprocessing.py          # Text cleaning, tokenization, lemmatization
+
 │   ├── feature_extraction.py     # TF-IDF vectorization
+
 │   ├── topic_model.py            # LDA topic modeling
+
 │   ├── evaluation.py             # Coherence score evaluation
+
 │   ├── keyword_extractor.py      # Keyword extraction logic
+
 │   ├── summarizer.py             # Extractive summarization
+
 │   ├── document_loader.py        # PDF and TXT file loading
+
 │   └── visualizations.py         # Word cloud, bar charts
+
 │
+
 ├── app.py                        # Main Streamlit application
+
 ├── requirements.txt              # Python dependencies
+
 ├── setup.sh                      # One-command environment setup script
+
 ├── README.md                     # Project documentation
+
 ├── architecture.png              # System architecture diagram
+
 └── report.pdf                    # Mid-semester report
+
 
 
 ---
