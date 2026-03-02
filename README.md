@@ -1,6 +1,8 @@
 # ResearchScope – Intelligent Topic Analyzer
 ### From Statistical NLP to Agentic AI Research Analysis
 
+Deployed Link :- https://researchscopegenai.streamlit.app/
+
 ## Project Overview
 
 This project focuses on the development of a multi-phase intelligent system for analyzing research documents. It transitions from a statistical, classical NLP approach in Milestone 1 to an autonomous, reasoning-based AI agent in Milestone 2.
