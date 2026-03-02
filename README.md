@@ -1,4 +1,4 @@
-# ResearchScope – Intelligent Topic Analyzer
+v# ResearchScope – Intelligent Topic Analyzer
 ### From Statistical NLP to Agentic AI Research Analysis
 
 ## Project Overview
@@ -163,9 +163,12 @@ The app will open automatically at *http://localhost:8501*
 
 
 ResearchScope/
+
 │
-├── data/                         # Input documents and datasets
+
+├── data/   # Input documents and datasets
 ├── src/
+
 │   ├── preprocessing.py          # Text cleaning, tokenization, lemmatization
 │   ├── feature_extraction.py     # TF-IDF vectorization
 │   ├── topic_model.py            # LDA topic modeling
