@@ -1,7 +1,7 @@
 import os
 import httpx
 from bs4 import BeautifulSoup
-from duckduckgo_search import DDGS
+from ddgs import DDGS
 from langchain_groq import ChatGroq
 
 # ── LLM Setup ──────────────────────────────────────────────────────────────────
@@ -12,7 +12,7 @@ def get_llm():
         api_key = st.secrets["GROQ_API_KEY"]
     except Exception:
         api_key = os.getenv("GROQ_API_KEY", "")
-    return ChatGroq(model="llama3-8b-8192", api_key=api_key, temperature=0.3)
+    return ChatGroq(model="llama-3.3-70b-versatile", api_key=api_key, temperature=0.3)
 
 
 # ── Node 1: Web Search ─────────────────────────────────────────────────────────

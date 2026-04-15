@@ -56,7 +56,7 @@ st.markdown("""
 # ── Mode Toggle (Top of Page) ──────────────────────────────────────────────────
 st.markdown("#### 🔄 Select Mode")
 mode = st.radio(
-    label="",
+    label="Select Mode",
     options=["🔬 Milestone 1: Classical NLP", "🤖 Milestone 2: Agentic AI"],
     horizontal=True,
     key="mode_toggle",
