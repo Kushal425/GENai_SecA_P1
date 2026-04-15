@@ -1,14 +1,16 @@
-# ResearchScope – Intelligent Topic Analyzer
-### From Statistical NLP to Agentic AI Research Analysis
+# ResearchScope – Intelligent Research Analyzer
+### From Classical NLP to Agentic AI Research Assistant
 
-Deployed Link :- https://researchscopegenai.streamlit.app/
+**🔗 Live App:** https://researchscopegenai.streamlit.app/
+
+---
 
 ## Project Overview
 
-This project focuses on the development of a multi-phase intelligent system for analyzing research documents. It transitions from a statistical, classical NLP approach in Milestone 1 to an autonomous, reasoning-based AI agent in Milestone 2.
+ResearchScope is a dual-mode intelligent research analysis system built for the Generative AI course end-semester project. The application seamlessly integrates two complete research paradigms, switchable via a toggle button in the UI:
 
-- **Milestone 1:** Implementation of a traditional NLP pipeline using TF-IDF, LDA Topic Modeling, and extractive summarization to analyze and surface key themes from research documents — strictly utilizing classical machine learning approaches (no LLMs).
-- **Milestone 2:** Extension into an agentic AI system that performs semantic reasoning, dynamic topic discovery, and intelligent summarization using LLMs and Retrieval-Augmented Generation (RAG).
+- **Milestone 1 (Classical NLP):** A fully offline, traditional NLP pipeline using TF-IDF, LDA Topic Modeling, and Extractive Summarization — no LLMs, no API calls.
+- **Milestone 2 (Agentic AI):** A LangGraph-powered autonomous research agent that performs live web search, multi-source retrieval, LLM-based summarization, structured report generation, and PDF export.
 
 ---
 
@@ -17,106 +19,125 @@ This project focuses on the development of a multi-phase intelligent system for 
 | Field | Details |
 |---|---|
 | **Team Members** | Kushal Sarkar, Chinmay Soni, Lakshya Bapna |
-| **API Budget** | Free Tier Only (NLTK, Scikit-learn, Gensim, Streamlit) |
-| **Framework** | Classical NLP (M1) / Agentic AI (M2) |
+| **API Budget** | Free Tier Only (Groq, DuckDuckGo, Streamlit Cloud) |
+| **LLM** | Groq — `llama-3.3-70b-versatile` (free tier) |
 | **Hosting** | Streamlit Cloud |
 
 ---
 
 ## Technology Stack
 
+### Milestone 1 — Classical NLP
 | Component | Technology |
 |---|---|
-| NLP Pipeline | NLTK, spaCy (`en_core_web_sm`), TF-IDF |
-| Topic Modeling | Gensim (LDA), CoherenceModel |
-| ML / Feature Extraction | Scikit-learn (TfidfVectorizer) |
+| Text Preprocessing | NLTK, spaCy (`en_core_web_sm`) |
+| Feature Extraction | Scikit-learn (TfidfVectorizer) |
+| Topic Modeling | Gensim (LDA, CoherenceModel) |
 | Summarization | NLTK + Scikit-learn (Extractive) |
+| Visualizations | Matplotlib, WordCloud |
+| Document Loading | PyPDF2, Python I/O |
+
+### Milestone 2 — Agentic AI
+| Component | Technology |
+|---|---|
+| Agent Workflow | LangGraph (StateGraph, nodes, edges) |
+| LLM Integration | Groq API — `llama-3.3-70b-versatile` |
+| Web Search | DDGS (DuckDuckGo Search, no API key) |
+| Web Retrieval | httpx + BeautifulSoup4 |
+| PDF Export | ReportLab |
+| State Management | TypedDict (ResearchState) |
+
+### Shared
+| Component | Technology |
+|---|---|
 | UI Framework | Streamlit |
-| Visualizations | Matplotlib, WordCloud, Pandas |
-| Execution | Python 3.x |
+| Data Handling | Pandas, NumPy |
+| Language | Python 3.10+ |
 
 ---
 
 ## Milestones & Deliverables
 
-### ✅ Milestone 1: Classical NLP Research Analysis System (Current)
+### ✅ Milestone 1: Classical NLP Research Analysis System — COMPLETE
 
-**Objective:** Build a robust baseline system that identifies key themes, extracts significant vocabulary, and produces structured analytical summaries using purely statistical and classical machine learning methods.
+**Objective:** Build a robust baseline system using purely statistical and classical ML methods.
 
-**Key Deliverables:**
-
-- **Document Intake:** Supports direct text pasting and multi-file uploading (`.txt` and `.pdf`) via PyPDF2. Documents are concatenated into a single corpus.
-- **Dynamic Metrics Row:** Real-time statistics including document count, total word count, sentence count, and unique vocabulary size.
-- **Keyword Extraction:** Identifies the most significant vocabulary using TF-IDF (Term Frequency-Inverse Document Frequency).
-- **Topic Modeling:** Discovers underlying thematic clusters using LDA (Latent Dirichlet Allocation), with a Coherence Score (Cᵥ) to quantify model quality.
-- **Extractive Summarization:** Generates concise summaries by scoring sentences with TF-IDF, retaining the most critical information.
-- **Analytical Visualizations:** Word Cloud, Horizontal Bar Chart (TF-IDF scores), and Grouped Bar Chart (LDA topic word distributions).
-- **Working Application:** Streamlit web UI running locally with a clean dark-mode interface.
-
----
-
-### 🔜 Milestone 2: Agentic AI Research Assistant (Upcoming)
-
-**Objective:** Transform the system into an autonomous agent capable of semantic reasoning, context-aware summarization, and evidence retrieval across research documents.
-
-**Key Deliverables:**
-
-- **Publicly Deployed App:** Hosted on Streamlit Cloud.
-- **Agent Workflow:** Implementation of reasoning loops (Plan → Retrieve → Synthesize).
-- **RAG Integration:** Retrieval-Augmented Generation for grounded, context-aware topic discovery.
-- **Semantic Understanding:** LLM-powered summarization that understands synonyms, context, and nuance.
-- **Demo Video:** Walkthrough of the agentic analysis process.
+**Delivered:**
+- **Document Intake:** Paste text directly or upload `.pdf` / `.txt` files (multi-file support via PyPDF2)
+- **Dynamic Metrics Row:** Live stats — document count, word count, sentence count, unique token count
+- **Keyword Extraction:** Top-N keywords ranked by TF-IDF score with badge display and sortable table
+- **Topic Modeling:** LDA clusters with Coherence Score (Cᵥ) shown per topic in expandable sections
+- **Extractive Summarization:** Sentences scored by TF-IDF, top-N selected in original document order
+- **Visualizations:** Word Cloud, Keyword Bar Chart, Topic Word Distribution Chart
+- **Streamlit UI:** Dark-mode interface with sidebar controls (topic count, keyword count, summary length sliders)
 
 ---
 
-## Evaluation Criteria
+### ✅ Milestone 2: Agentic AI Research Assistant — COMPLETE
 
-| Phase | Weight | Criteria |
-|---|---|---|
-| Milestone 1 | 25% | Preprocessing Quality, TF-IDF Feature Engineering, LDA Coherence Score, UI Functional Usability |
-| Milestone 2 | 30% | Agentic Reasoning Quality, RAG Implementation, Semantic Accuracy, Successful Deployment |
+**Objective:** Transform the system into an autonomous agent that retrieves, reasons, and generates structured research reports.
+
+**Delivered:**
+- **5-Node LangGraph Workflow:**
+  1. `search_node` — DuckDuckGo live web search (no API key needed)
+  2. `retrieve_node` — Fetches full page content from each result URL via httpx + BeautifulSoup
+  3. `validate_node` — Filters empty, duplicate, or low-quality sources; keeps top 5
+  4. `summarize_node` — Groq LLM synthesizes a multi-paragraph research summary from sources
+  5. `report_node` — LLM generates a structured report: Title, Abstract, Key Findings, Conclusion
+- **Shared State:** `ResearchState` TypedDict maintains state across all 5 nodes
+- **Robustness:** API failure fallbacks at every node — app never crashes on LLM errors
+- **Structured Output:** Validated report with source URLs and clear attribution
+- **Live Status Indicators:** Real-time step-by-step progress shown in the UI using `st.status()`
+- **PDF Export (Extension):** Download the full research report as a professionally styled PDF via ReportLab
+- **M1/M2 Toggle:** Single switch button in the app header toggles between both modes — M1 code is completely untouched
 
 ---
 
-## Technical Architecture (Milestone 1)
+## System Architecture
 
-The system follows a linear data pipeline through modular components:
-
+### Milestone 1 Pipeline
 ```
-Input (Text / PDF)
+Input (Text / PDF / TXT)
       ↓
-Text Preprocessing     [src/preprocessing.py]
+Document Loader           [src/document_loader.py]
+      ↓
+Text Preprocessing        [src/preprocessing.py]
   - Lowercasing, Punctuation Removal
-  - Tokenization, Stopword Removal, Lemmatization
+  - Tokenization, Stopword Removal, Lemmatization (spaCy)
       ↓
-Feature Extraction     [src/feature_extraction.py]
-  - TF-IDF Vectorization (scikit-learn)
+TF-IDF Feature Extraction [src/feature_extraction.py]
       ↓
-Topic Modeling         [src/topic_model.py]
-  - LDA Model (gensim)
-  - Coherence Evaluation [src/evaluation.py]
+      ├──→ Keyword Extraction    [src/keyword_extractor.py]
+      └──→ LDA Topic Modeling    [src/topic_model.py]
+              └──→ Coherence Score [src/evaluation.py]
       ↓
 Extractive Summarization  [src/summarizer.py]
-  - Sentence Scoring & Ranking
       ↓
-UI & Visualizations    [app.py, src/visualizations.py]
-  - Streamlit Dashboard, Word Cloud, Charts
+UI & Visualizations       [app.py, src/visualizations.py]
+```
+
+### Milestone 2 — LangGraph Agent Pipeline
+```
+User Research Query (text input)
+      ↓
+Node 1: Search        [src/agent/nodes.py] — DuckDuckGo top 6 results
+      ↓
+Node 2: Retrieve      [src/agent/nodes.py] — Fetch & parse full page content
+      ↓
+Node 3: Validate      [src/agent/nodes.py] — Filter & deduplicate sources
+      ↓
+Node 4: Summarize     [src/agent/nodes.py] — Groq LLM evidence synthesis
+      ↓
+Node 5: Report        [src/agent/nodes.py] — Structured report generation
+      ↓
+Report Formatter      [src/agent/report_generator.py]
+      ↓
+UI Display + PDF Export [app.py, src/pdf_export.py]
 ```
 
 ---
 
-## Limitations of Current Approach
-
-> These limitations justify the future transition to the Agentic AI system in Milestone 2.
-
-- **Lack of Semantic Understanding:** TF-IDF and LDA rely purely on word counting and co-occurrence. They cannot understand meaning, context, or synonyms (e.g., "automobile" and "car" are treated as entirely separate entities).
-- **Rigid Extractive Summaries:** The summarizer pulls verbatim sentences from the text, which can produce disjointed results when sentences rely heavily on surrounding context (e.g., pronouns like "He said...").
-- **Fixed Topic Constraints:** LDA requires the user to specify the exact number of topics upfront. An incorrect number can force unrelated concepts together or unnecessarily fragment a single coherent topic.
-- **Static Processing:** The system cannot iteratively learn or reason across multiple documents — it only processes the payload provided at execution time.
-
----
-
-## How to Run (Milestone 1)
+## How to Run Locally
 
 **1. Clone the Repository:**
 ```bash
@@ -153,12 +174,23 @@ python -m spacy download en_core_web_sm
 python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt'); nltk.download('punkt_tab')"
 ```
 
-**6. Launch Streamlit App:**
+**6. Set Up Groq API Key (required for Milestone 2 only):**
+
+Create a file at `.streamlit/secrets.toml`:
+```toml
+GROQ_API_KEY = "your_groq_api_key_here"
+```
+
+Get a free API key at [console.groq.com](https://console.groq.com) (no credit card required).
+
+> Milestone 1 works completely offline — no API key needed.
+
+**7. Launch the App:**
 ```bash
 streamlit run app.py
 ```
 
-The app will open automatically at **http://localhost:8501**
+The app will open at **http://localhost:8501**
 
 ---
 
@@ -167,8 +199,17 @@ The app will open automatically at **http://localhost:8501**
 ```
 ResearchScope/
 │
-├── data/                         # Input documents and datasets
+├── .streamlit/
+│   └── secrets.toml              # Local API key (gitignored)
+│
 ├── src/
+│   ├── agent/                    # Milestone 2 — Agentic AI modules
+│   │   ├── __init__.py
+│   │   ├── state.py              # ResearchState TypedDict
+│   │   ├── nodes.py              # 5 LangGraph node functions
+│   │   ├── graph.py              # LangGraph StateGraph + run_research_agent()
+│   │   └── report_generator.py  # Formats final state into clean report dict
+│   │
 │   ├── preprocessing.py          # Text cleaning, tokenization, lemmatization
 │   ├── feature_extraction.py     # TF-IDF vectorization
 │   ├── topic_model.py            # LDA topic modeling
@@ -176,14 +217,21 @@ ResearchScope/
 │   ├── keyword_extractor.py      # Keyword extraction logic
 │   ├── summarizer.py             # Extractive summarization
 │   ├── document_loader.py        # PDF and TXT file loading
-│   └── visualizations.py         # Word cloud, bar charts
+│   ├── visualizations.py         # Word cloud, bar charts
+│   └── pdf_export.py             # ReportLab PDF generation (M2 extension)
 │
-├── app.py                        # Main Streamlit application
-├── requirements.txt              # Python dependencies
-├── setup.sh                      # One-command environment setup script
-├── README.md                     # Project documentation
-├── architecture.png              # System architecture diagram
-└── report.pdf                    # Mid-semester report
+├── submission_docs/              # Report, architecture diagram
+├── app.py                        # Main Streamlit app (M1 + M2 + toggle)
+├── requirements.txt              # All Python dependencies
+├── setup.sh                      # One-command setup script (macOS/Linux)
+└── README.md                     # Project documentation
 ```
 
 ---
+
+## Evaluation Criteria
+
+| Phase | Weight | Criteria |
+|---|---|---|
+| **Milestone 1** | 25% | Preprocessing Quality, TF-IDF Feature Engineering, LDA Coherence Score, UI Functional Usability |
+| **Milestone 2** | 30% | Agentic Reasoning Quality, Workflow Implementation, Structured Report Quality, UI & Deployment, Extension (PDF Export) |
