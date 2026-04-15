@@ -12,7 +12,7 @@ pandas
 langgraph
 langchain-core
 langchain-groq
-duckduckgo-search
+ddgs
 httpx
 beautifulsoup4
 reportlab
