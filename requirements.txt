@@ -9,3 +9,10 @@ numpy
 streamlit
 PyPDF2
 pandas
+langgraph
+langchain-core
+langchain-groq
+duckduckgo-search
+httpx
+beautifulsoup4
+reportlab
