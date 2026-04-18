@@ -51,3 +51,21 @@ def run_research_agent(query: str) -> dict:
     )
     result = research_graph.invoke(initial_state)
     return result
+
+def stream_research_agent(query: str):
+    """
+    Entry point for streaming the pipeline.
+    Yields each state update to track progress.
+    """
+    initial_state = ResearchState(
+        query=query,
+        search_results=[],
+        retrieved_texts=[],
+        validated_sources=[],
+        llm_summary="",
+        report={},
+        status="Starting...",
+        error=None,
+    )
+    for event in research_graph.stream(initial_state):
+        yield event
