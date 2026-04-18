@@ -12,7 +12,7 @@ from src.summarizer import summarize_text
 from src.visualizations import generate_wordcloud, plot_top_keywords, plot_topic_distribution
 
 # ── M2 imports ─────────────────────────────────────────────────────────────────
-from src.agent.graph import run_research_agent
+from src.agent.graph import run_research_agent, stream_research_agent
 from src.agent.report_generator import format_report
 from src.pdf_export import generate_pdf_report
 
@@ -250,7 +250,7 @@ elif "Milestone 2" in mode:
             "5. 📝 Generate structured report"
         )
         st.divider()
-        st.markdown("**LLM:** Groq — `llama3-8b-8192`")
+        st.markdown("**LLM:** Groq — `llama-3.3-70b-versatile`")
         st.markdown("**Search:** DuckDuckGo (no API key)")
         st.markdown("**Extension:** PDF Export")
 
@@ -272,20 +272,80 @@ elif "Milestone 2" in mode:
         else:
             # ── Live Status Indicators ───────────────────────────────────────
             final_state = None
-            with st.status("🤖 Running Research Agent...", expanded=True) as status:
-                st.write("🔎 **Step 1/5** — Searching the web...")
-                st.write("📥 **Step 2/5** — Retrieving source content...")
-                st.write("✅ **Step 3/5** — Validating sources...")
-                st.write("🧠 **Step 4/5** — Summarizing with LLM...")
-                st.write("📝 **Step 5/5** — Generating structured report...")
-                final_state = run_research_agent(query)
-                if final_state.get("error"):
-                    status.update(label=f"⚠️ Completed with warnings", state="error")
-                else:
-                    status.update(label="✅ Research complete!", state="complete")
+            ui_placeholder = st.empty()
+            
+            steps_order = ["search", "retrieve", "validate", "summarize", "report"]
+            step_status = {step: "pending" for step in steps_order}
+            step_status["search"] = "active" # Initial active step
+            
+            step_labels = {
+                "search": ("Searching the web...", "Search completed", "Pending"),
+                "retrieve": ("Retrieving source content...", "Retrieve completed", "Pending"),
+                "validate": ("Validating sources...", "Validation completed", "Pending"),
+                "summarize": ("Summarizing with LLM...", "Summarization completed", "Pending"),
+                "report": ("Generating structured report...", "Report generated", "Pending")
+            }
+            
+            def render_progress(is_complete=False, has_error=False):
+                header_text = "🤖 Running Research Agent..."
+                if has_error:
+                    header_text = "⚠️ Completed with warnings"
+                elif is_complete:
+                    header_text = "✅ Research complete!"
+                
+                # Render using custom HTML/CSS for precise color control (like green #22C55E)
+                progress_html = f'''
+                <div style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+                    <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: #f8fafc;">
+                        {header_text}
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.95rem;">
+                '''
+                
+                for i, step in enumerate(steps_order, 1):
+                    status = step_status[step]
+                    if status == "completed":
+                        icon = "✔"
+                        color = "#22c55e" # Green
+                        text = step_labels[step][1]
+                    elif status == "active":
+                        icon = "⏳"
+                        color = "#60a5fa" # Blue/Yellow spinner context
+                        text = step_labels[step][0]
+                    else:
+                        icon = "⬜"
+                        color = "#64748b" # Grey
+                        text = step_labels[step][2]
+                    
+                    progress_html += f'<div style="color: {color}; display: flex; align-items: center; gap: 0.5rem;"><span>{icon}</span> <span><b>Step {i}/5</b> — {text}</span></div>'
+                
+                progress_html += '''
+                    </div>
+                </div>
+                '''
+                ui_placeholder.markdown(progress_html, unsafe_allow_html=True)
+
+            # Initial render
+            render_progress()
+
+            # Execute graph and stream events
+            for event in stream_research_agent(query):
+                for node_name, state in event.items():
+                    final_state = state
+                    if node_name in step_status:
+                        step_status[node_name] = "completed"
+                        curr_idx = steps_order.index(node_name)
+                        if curr_idx + 1 < len(steps_order):
+                            next_node = steps_order[curr_idx + 1]
+                            step_status[next_node] = "active"
+                
+                render_progress()
+                
+            has_error = bool(final_state and final_state.get("error"))
+            render_progress(is_complete=True, has_error=has_error)
 
             # ── Error Warning ────────────────────────────────────────────────
-            if final_state.get("error"):
+            if has_error:
                 st.warning(f"⚠️ Note: {final_state['error']}")
 
             # ── Format Report ─────────────────────────────────────────────────
