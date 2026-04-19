@@ -61,6 +61,7 @@ mode = st.radio(
     horizontal=True,
     key="mode_toggle",
     label_visibility="collapsed",
+    index=1,
 )
 st.divider()
 
